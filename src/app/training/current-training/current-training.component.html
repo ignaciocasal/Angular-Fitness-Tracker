@@ -1,0 +1,14 @@
+<section class="current-training" fxLayout fxLayoutAlign="center">
+  <mat-card fxFlex.xs="100%" fxFlex="400px">
+    <mat-card-content fxLayout="column" fxLayoutAlign="center center" >
+      <mat-progress-spinner mode="determinate" [value]="progress"></mat-progress-spinner>
+      <h1>{{progress}}%</h1>
+      <p>Keep on going, you can do it!</p>
+    </mat-card-content>
+
+    <mat-card-actions fxLayoutAlign="center">
+      <button mat-flat-button color="warn" (click)="onStopTraining()">Stop!</button>
+    </mat-card-actions>
+  </mat-card>
+</section>
+

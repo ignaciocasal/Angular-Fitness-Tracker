@@ -1,0 +1,15 @@
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:hover, a:focus {
+  color: lightgray;
+}
+
+.menu-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

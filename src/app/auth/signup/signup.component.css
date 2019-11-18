@@ -1,0 +1,7 @@
+mat-form-field, .checkbox-section {
+  width: 300px;
+}
+
+.checkbox-section mat-error {
+  font-size: 75%;
+}
