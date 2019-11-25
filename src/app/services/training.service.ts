@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Exercise} from "../models/exercise.model";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
+import {AngularFirestore} from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +9,13 @@ import {Subject} from "rxjs";
 export class TrainingService {
 
   exerciseChanged = new Subject<Exercise>()
-  private typesOfExercises: Exercise[] = [
-    {id: 'crunches', name: 'Crunches', duration: 30, calories: 8},
-    {id: 'touch-toes', name: 'Touch Toes', duration: 180, calories: 15},
-    {id: 'side-lunges', name: 'Side Lunges', duration: 120, calories: 18},
-    {id: 'burpees', name: 'Burpees', duration: 60, calories: 8}
-  ];
-
+  typesOfExercisesChanged = new Subject<Exercise[]>()
+  exercisesChanged = new Subject<Exercise[]>()
+  private typesOfExercises: Exercise[] = [];
   private runningExercise: Exercise;
-  private exercises: Exercise[] = []
+  private afSubs: Subscription[] = []
 
-  constructor() {
+  constructor(private db: AngularFirestore) {
   }
 
   startExercise(selectedId: string) {
@@ -27,7 +24,7 @@ export class TrainingService {
   }
 
   completeExercise() {
-    this.exercises.push({
+    this.addDataToDatabase({
       ...this.runningExercise,
       date: new Date(),
       state: "completed"
@@ -38,7 +35,7 @@ export class TrainingService {
   }
 
   cancelExercise(progress: number) {
-    this.exercises.push({
+    this.addDataToDatabase({
       ...this.runningExercise,
       duration: this.runningExercise.duration * (progress / 100),
       calories: this.runningExercise.calories * (progress / 100),
@@ -49,16 +46,42 @@ export class TrainingService {
     this.exerciseChanged.next(null)
   }
 
-  getTypesOfExercises() {
-    return this.typesOfExercises.slice()
+  fetchTypesOfExercises() {
+    this.afSubs.push(this.db.collection('typesExercises').snapshotChanges()
+      .map(docArray => {
+        return docArray.map(doc => {
+          return {
+            id: doc.payload.doc.id,
+            ...doc.payload.doc.data()
+          }
+        })
+      }).subscribe((exercises: Exercise[]) => {
+      this.typesOfExercises = exercises;
+      this.typesOfExercisesChanged.next([...this.typesOfExercises])
+    }))
   }
 
   getRunningExercise() {
     return {...this.runningExercise}
   }
 
-  getExercises(){
-    return this.exercises.slice()
+  fetchExercises() {
+    this.afSubs.push(this.db.collection('finishedExercises').valueChanges()
+      .subscribe((exercises: Exercise[]) => {
+        this.exercisesChanged.next(exercises)
+      }))
+    // return this.exercises.slice()
+  }
+
+  cancelSubscriptions(){
+    this.afSubs.forEach(sub => sub.unsubscribe())
+  }
+
+  private addDataToDatabase(exercise: Exercise) {
+    this.db.collection('finishedExercises').add(exercise)
+      .then(res => {
+        console.log("Success! ", res)
+      })
   }
 
 }

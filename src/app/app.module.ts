@@ -37,6 +37,10 @@ import {TrainingService} from "./services/training.service";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {environment} from "../environments/environment";
+import { AngularFireModule } from '@angular/fire';
+import {AngularFirestoreModule} from "@angular/fire/firestore";
+import {AngularFireAuthModule} from "@angular/fire/auth";
 
 @NgModule({
   declarations: [
@@ -76,7 +80,11 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatTableModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    // AngularFireStorageModule,
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es'}, AuthService, TrainingService],
   bootstrap: [AppComponent],

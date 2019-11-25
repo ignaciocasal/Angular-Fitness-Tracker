@@ -21,7 +21,7 @@
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.date.toDate() | date: 'HH:mm dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
