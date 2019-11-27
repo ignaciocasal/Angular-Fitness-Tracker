@@ -41,6 +41,8 @@ import {environment} from "../environments/environment";
 import { AngularFireModule } from '@angular/fire';
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireAuthModule} from "@angular/fire/auth";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {UiService} from "./services/ui.service";
 
 @NgModule({
   declarations: [
@@ -84,9 +86,10 @@ import {AngularFireAuthModule} from "@angular/fire/auth";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    MatSnackBarModule,
     // AngularFireStorageModule,
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es'}, AuthService, TrainingService],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es'}, AuthService, TrainingService, UiService],
   bootstrap: [AppComponent],
   entryComponents: [StopTrainingDialogComponent]
 })

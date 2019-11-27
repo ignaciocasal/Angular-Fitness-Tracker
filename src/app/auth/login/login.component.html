@@ -11,6 +11,7 @@
       <mat-error *ngIf="passwordInput.hasError('required')">Password is required</mat-error>
     </mat-form-field>
 
-    <button type="submit" mat-raised-button color="primary">Login</button>
+    <button *ngIf="!isLoading" type="submit" mat-raised-button color="primary">Login</button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

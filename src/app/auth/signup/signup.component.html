@@ -25,6 +25,7 @@
       <mat-error *ngIf="f.touched && !agreeInput.value">You must accept the Terms and Conditions</mat-error>
     </div>
 
-    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Sign up</button>
+    <button *ngIf="!isLoading" type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Sign up</button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

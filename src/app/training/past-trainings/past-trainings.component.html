@@ -1,22 +1,9 @@
-<div *ngFor="let ex of pastExercises">
-  <h4>{{ex.id}}</h4>
-  <h4>{{ex.name}}</h4>
-  <h4>{{ex.duration}}</h4>
-  <h4>{{ex.calories}}</h4>
-  <h4>{{ex.date}}</h4>
-  <h4>{{ex.state}}</h4>
-  ---------------
-</div>
-
 <div class="mat-elevation-z8">
-
-
   <div fxLayoutAlign="center center">
     <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
   </div>
-
 
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="date">

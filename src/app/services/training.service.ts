@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Exercise} from "../models/exercise.model";
 import {Subject, Subscription} from "rxjs";
 import {AngularFirestore} from "@angular/fire/firestore";
+import {UiService} from "./ui.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class TrainingService {
   private runningExercise: Exercise;
   private afSubs: Subscription[] = []
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private uiService: UiService) {
   }
 
   startExercise(selectedId: string) {
@@ -47,8 +48,10 @@ export class TrainingService {
   }
 
   fetchTypesOfExercises() {
+    this.uiService.loadingStateChanged.next(true)
     this.afSubs.push(this.db.collection('typesExercises').snapshotChanges()
       .map(docArray => {
+        // throw(new Error())
         return docArray.map(doc => {
           return {
             id: doc.payload.doc.id,
@@ -56,9 +59,14 @@ export class TrainingService {
           }
         })
       }).subscribe((exercises: Exercise[]) => {
-      this.typesOfExercises = exercises;
-      this.typesOfExercisesChanged.next([...this.typesOfExercises])
-    }))
+        this.uiService.loadingStateChanged.next(false)
+        this.typesOfExercises = exercises;
+        this.typesOfExercisesChanged.next([...this.typesOfExercises])
+      }, error => {
+        this.uiService.loadingStateChanged.next(false)
+        this.uiService.showSnackbar('Fetching types of exercises failed. Please try again later.', null, 3000)
+        this.typesOfExercisesChanged.next(null)
+      }))
   }
 
   getRunningExercise() {
@@ -73,7 +81,7 @@ export class TrainingService {
     // return this.exercises.slice()
   }
 
-  cancelSubscriptions(){
+  cancelSubscriptions() {
     this.afSubs.forEach(sub => sub.unsubscribe())
   }
 
