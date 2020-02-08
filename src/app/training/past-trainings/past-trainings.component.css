@@ -7,3 +7,33 @@ table {
   width: 90%;
   max-width: 370px;
 }
+
+td mat-icon {
+  vertical-align: middle;
+}
+
+/*By default, the mobile label shouldn't show*/
+.mobile-label {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  /*Custom header label that shows in each column, with a set width and bold font*/
+  .mobile-label {
+    width: 80px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  /*Remove the header row altogether*/
+  .mat-header-row {
+    display: none;
+  }
+
+  /*The row cells should display as a column, justified left, with a bit of extra padding*/
+  .mat-row {
+    flex-direction: column;
+    align-items: start;
+    padding: 8px 24px;
+  }
+}

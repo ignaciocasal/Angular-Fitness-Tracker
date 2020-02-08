@@ -13,3 +13,11 @@ a:hover, a:focus {
   margin: 0;
   padding: 0;
 }
+
+.menu-items mat-icon {
+  vertical-align: sub;
+}
+
+.is-active {
+  color: lightgray;
+}

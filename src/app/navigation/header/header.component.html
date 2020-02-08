@@ -1,14 +1,14 @@
 <mat-toolbar color="primary">
-  <button fxHide fxShow.xs mat-icon-button (click)="onToogle()">
+  <button fxHide fxShow.xs mat-icon-button (click)="onToggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <a routerLink="/">Angular Fitness Tracker</a>
   <div fxFlex fxLayoutAlign="flex-end" fxHide.xs>
-    <ul class="menu-items" fxLayout fxLayoutGap="10px">
-      <li *ngIf="!isAuth"><a routerLink="/signup">Signup</a></li>
-      <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
-      <li *ngIf="isAuth"><a routerLink="/training">Training</a></li>
-      <li *ngIf="isAuth"><a (click)="onLogout()">Logout</a></li>
+    <ul class="menu-items" fxLayout fxLayoutGap="25px">
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup" routerLinkActive="is-active">Sign up</a></li>
+      <li *ngIf="!(isAuth$ | async)"><a routerLink="/login" routerLinkActive="is-active">Login</a></li>
+      <li *ngIf="isAuth$ | async"><a routerLink="/training" routerLinkActive="is-active"><mat-icon>fitness_center</mat-icon> Training</a></li>
+      <li *ngIf="isAuth$ | async"><a (click)="onLogout()"><mat-icon>exit_to_app</mat-icon> Logout</a></li>
     </ul>
   </div>
 </mat-toolbar>
