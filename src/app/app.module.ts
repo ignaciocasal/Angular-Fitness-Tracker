@@ -43,6 +43,8 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AngularFireAuthModule} from "@angular/fire/auth";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UiService} from "./services/ui.service";
+import {StoreModule} from "@ngrx/store";
+import {reducers} from "./reducers/app.reducer";
 
 @NgModule({
   declarations: [
@@ -87,7 +89,7 @@ import {UiService} from "./services/ui.service";
     AngularFirestoreModule,
     AngularFireAuthModule,
     MatSnackBarModule,
-    // AngularFireStorageModule,
+    StoreModule.forRoot(reducers),
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'es'}, AuthService, TrainingService, UiService],
   bootstrap: [AppComponent],
