@@ -2,7 +2,7 @@
   <button fxHide fxShow.xs mat-icon-button (click)="onToggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <a routerLink="/">Angular Fitness Tracker</a>
+  <a routerLink="/" class="logo"><i class="devicon-angularjs-plain"></i> Angular Fitness Tracker</a>
   <div fxFlex fxLayoutAlign="flex-end" fxHide.xs>
     <ul class="menu-items" fxLayout fxLayoutGap="25px">
       <li *ngIf="!(isAuth$ | async)"><a routerLink="/signup" routerLinkActive="is-active">Sign up</a></li>

@@ -3,8 +3,10 @@
     <mat-card-title fxLayoutAlign="center">Login</mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutAlign="center center" >
       <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <span>demo@demo.com</span>
+        <span>123456</span>
         <mat-form-field>
-          <input matInput type="email" placeholder="Email" ngModel #emailInput="ngModel" name="email" email required>
+          <input matInput type="email" placeholder="Email" ngModel #emailInput="ngModel" name="email" email required autocomplete="off">
           <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
           <mat-error *ngIf="!emailInput.hasError('required')">Email must have a valid format</mat-error>
         </mat-form-field>

@@ -4,8 +4,14 @@ a {
   color: white;
 }
 
-a:hover, a:focus {
-  color: lightgray;
+.menu-items a:hover, .menu-items a:focus {
+  text-decoration: underline;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .menu-items {
@@ -19,5 +25,5 @@ a:hover, a:focus {
 }
 
 .is-active {
-  color: lightgray;
+  text-decoration: underline;
 }
